@@ -23,6 +23,7 @@ extension APILocalProvider : APIHistoryProvider {
         if let first = result.first {
             completion(first,nil)
         }else{
+            //TODO pass custom error
             completion(nil,nil)
         }
     }

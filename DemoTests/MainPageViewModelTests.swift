@@ -7,23 +7,16 @@
 
 import XCTest
 @testable import Demo
-class MockViewModel: MainPageViewModel {
-    
-}
+
 
 class MainPageViewModelTests: XCTestCase {
+    var startTime:Date?
+    var endTime:Date?
+    var stub:MainPageViewModel?
+    var exp:XCTestExpectation?
+    override func setUpWithError() throws {
 
-//    override func setUpWithError() throws {
-//        // Put setup code here. This method is called before the invocation of each test method in the class.
-//
-//        // In UI tests it is usually best to stop immediately when a failure occurs.
-//        continueAfterFailure = false
-//
-//        // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
-//        XCUIApplication().launch()
-//
-//        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-//    }
+    }
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
@@ -31,7 +24,32 @@ class MainPageViewModelTests: XCTestCase {
 
     
     func testStartRegularRefresh() {
-        
+        stub = MainPageViewModelFactory.createMainPageViewModel(aDelegate: self)
+        XCTAssert(stub?.numberOfRecord() == 0)
+        startTime = Date()
+        exp = self.expectation(description: "wait")
+        stub!.startRegularRefresh()
+        self.wait(for: [exp!], timeout: 10)
     }
 
+}
+
+extension MainPageViewModelTests : MainPageViewModelDelegate {
+    func fetchWithError(error: NSError) {
+        
+    }
+    
+    func fetchSuccess() {
+        
+        let interval = Date().timeIntervalSince(startTime!)
+        if interval > 5 {
+            XCTAssert(interval < 9)
+            XCTAssert(stub?.numberOfRecord() == 1)
+            exp!.fulfill()
+        }else{
+            XCTAssert(stub?.numberOfRecord() == 1)
+        }
+    }
+    
+    
 }
