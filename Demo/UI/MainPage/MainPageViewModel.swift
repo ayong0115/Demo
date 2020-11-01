@@ -9,7 +9,7 @@ import UIKit
 
 class MainPageViewModelFactory {
     static func createMainPageViewModel(aDelegate:MainPageViewModelDelegate) -> MainPageViewModel {
-        return MainPageViewModel(dataProvider: APIOnlineProvider(),delegate: aDelegate)
+        return MainPageViewModel(dataProvider: APIOnlineProvider(),localProvider: APILocalProvider(),delegate: aDelegate)
     }
 }
 
@@ -24,17 +24,23 @@ class MainPageViewModel: NSObject {
     }
     
     private let apiDataProvider: APIDataProvider
+    private let apiLocalProvider: APILocalProvider
     private var timer: Timer?
     weak var delegate:MainPageViewModelDelegate?
     private var currentResult:APIList?
     
-    internal init(dataProvider:APIDataProvider,delegate:MainPageViewModelDelegate) {
+    internal init(dataProvider:APIDataProvider,localProvider:APILocalProvider, delegate:MainPageViewModelDelegate) {
         self.apiDataProvider = dataProvider
+        self.apiLocalProvider = localProvider
         self.delegate = delegate
     }
     
     func startRegularRefresh() {
+        timer?.invalidate()
         timer = Timer.scheduledTimer(timeInterval: constants.kTimerInterval, target: self, selector: #selector(fetchAPI), userInfo: nil, repeats: true)
+        if currentResult == nil {
+            fetchFromLocal()
+        }
     }
     
     func stopRegularRefresh() {
@@ -55,6 +61,20 @@ class MainPageViewModel: NSObject {
         return nil
     }
 //MARK: PRIVATE
+    
+    private func fetchFromLocal() {
+        weak var weakSelf = self
+        apiLocalProvider.fetchLatestApiList { (apiList, error) in
+            DispatchQueue.main.async {
+                if let error = error{
+                    weakSelf?.delegate?.fetchWithError(error: error)
+                    return
+                }
+                weakSelf?.currentResult = apiList
+                weakSelf?.delegate?.fetchSuccess()
+            }
+        }
+    }
     
     @objc private func fetchAPI() {
         weak var weakSelf = self

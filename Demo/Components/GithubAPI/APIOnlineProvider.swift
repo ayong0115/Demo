@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 class APIOnlineProvider: NSObject {
     struct Constants {
         static let kRequestUrl = "https://api.github.com/"
@@ -16,6 +15,8 @@ class APIOnlineProvider: NSObject {
 
 
 extension APIOnlineProvider : APIDataProvider {
+
+    
     func fetchLatestApiList(_ completion: @escaping (APIList?,NSError?) -> Void) {
         let url = URL(string: APIOnlineProvider.Constants.kRequestUrl)
         let request = URLRequest(url: url!)
@@ -30,11 +31,10 @@ extension APIOnlineProvider : APIDataProvider {
                 return
             }
             
-            if let resutl = APIResult(data){
-                completion(resutl,nil)
+            if let result = APIResult(data){
+                LocalSotrageHelper.shared.saveResult(result: result)
+                completion(result,nil)
             }
-
-//            print(String(data: data!, encoding: .utf8))
         }
         task.resume()
     }

@@ -56,10 +56,29 @@
                     <view key="view" contentMode="scaleToFill" id="ADe-QP-HvC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cBg-98-xDf">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="9cQ-S0-jUD" id="eMf-cr-QyJ"/>
+                                    <outlet property="delegate" destination="9cQ-S0-jUD" id="1vE-dv-Iit"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="t9N-Eh-83Q"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="cBg-98-xDf" firstAttribute="bottom" secondItem="t9N-Eh-83Q" secondAttribute="bottom" id="N76-zj-10s"/>
+                            <constraint firstItem="cBg-98-xDf" firstAttribute="leading" secondItem="t9N-Eh-83Q" secondAttribute="leading" id="V9i-rT-Aks"/>
+                            <constraint firstItem="cBg-98-xDf" firstAttribute="trailing" secondItem="t9N-Eh-83Q" secondAttribute="trailing" id="fO3-Qg-x4y"/>
+                            <constraint firstItem="cBg-98-xDf" firstAttribute="top" secondItem="t9N-Eh-83Q" secondAttribute="top" id="g8h-de-FL6"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="History" id="0fI-Xa-dhJ"/>
+                    <connections>
+                        <outlet property="tableView" destination="cBg-98-xDf" id="wEP-3g-UIq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZNJ-go-gjj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17192" systemVersion="19H2" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="APIRequestItem" representedClassName="APIRequestItem" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="url" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="APIRequestResult" representedClassName="APIRequestResult" syncable="YES" codeGenerationType="class">
+        <attribute name="time" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="apis" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="APIRequestItem"/>
+    </entity>
+    <elements>
+        <element name="APIRequestResult" positionX="-45" positionY="0" width="128" height="73"/>
+        <element name="APIRequestItem" positionX="-18" positionY="27" width="128" height="73"/>
+    </elements>
 </model>

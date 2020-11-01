@@ -8,9 +8,9 @@
 import Foundation
 
 struct APIItem:APIData {
-    var apiName: String
+    var name: String
     
-    var apiUrl: String
+    var url: String
     
     
 }

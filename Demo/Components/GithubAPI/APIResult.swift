@@ -8,21 +8,34 @@
 import UIKit
 
 struct APIResult:APIList {
-    
-    var apiList: [APIData]
+
+    var apis: [APIData]
     var time: Date
-    
+
     init?(_ jsonData:Data) {
         let dict = try? JSONSerialization.jsonObject(with: jsonData, options: .mutableContainers)
         guard let dic = dict as? Dictionary<String, String> else {
             return nil
         }
-        self.apiList = [];
+        self.apis = [];
         for (key,value) in dic {
-            self.apiList.append(APIItem(apiName: key, apiUrl: value))
+            self.apis.append(APIItem(name: key, url: value))
         }
         self.time = Date()
     }
     
-    
+    init?(_ storage:APIRequestResult){
+        self.apis = [];
+        
+        for item in storage.apis!{
+            if  let item = item as? APIRequestItem {
+                self.apis.append(APIItem(name: item.name!, url: item.url!))
+            }
+        }
+        self.time = storage.time!
+    }
+
+
 }
+
+

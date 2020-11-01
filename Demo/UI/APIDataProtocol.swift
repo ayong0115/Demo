@@ -9,11 +9,11 @@ import Foundation
 
 public protocol APIList {
     var time: Date { get }
-    var apiList:[APIData] { get }
+    var apis:[APIData] { get }
 }
 
 public protocol APIData {
-    var apiName: String { get }
-    var apiUrl: String { get }
+    var name: String { get }
+    var url: String { get }
     
 }
